@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: flight_postgres
+    restart: always
+    environment:
+      POSTGRES_DB: flight_data
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: yourpassword
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+  delivery:
+    build:
+      context: ./delivery
+    ports:
+      - "5002:5002"
+    depends_on:
+      - postgres
+    env_file:
+      - ./delivery/.env
+
+
+volumes:
+  pgdata:
+
