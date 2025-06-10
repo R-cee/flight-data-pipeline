@@ -13,6 +13,18 @@ services:
       - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
+
+  ingestion:
+    build:
+      context: ./ingestion
+    depends_on:
+      - postgres
+    env_file:
+      - ./ingestion/.env
+    volumes:
+      - ./ingestion/data:/app/ingestion/data
+
+
   delivery:
     build:
       context: ./delivery
@@ -20,10 +32,54 @@ services:
       - "5002:5002"
     depends_on:
       - postgres
-    env_file:
-      - ./delivery/.env
+    env_file: ./delivery/.env
 
+  processing:
+    build:
+      context: ./processing
+    depends_on:
+      - postgres
+    env_file: ./processing/.env
+    extra_hosts:
+      host.docker.internal: host-gateway
+
+  postgres_airflow:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: airflow
+      POSTGRES_PASSWORD: airflow
+      POSTGRES_DB: airflow
+    ports:
+      - "5433:5432"  # different port to avoid conflicts
+
+  airflow-webserver:
+    build:
+      context: ./airflow
+    depends_on:
+      - postgres_airflow
+    environment:
+      - AIRFLOW__CORE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres_airflow:5432/airflow
+      - AIRFLOW__CORE__LOAD_EXAMPLES=False
+      - AIRFLOW__WEBSERVER__SECRET_KEY=your_super_secret_key
+    volumes:
+      - ./airflow/dags:/opt/airflow/dags
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - "8080:8080"
+    command: webserver
+
+  airflow-scheduler:
+    build:
+      context: ./airflow
+    depends_on:
+      - postgres_airflow
+    environment:
+      - AIRFLOW__CORE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres_airflow:5432/airflow
+      - AIRFLOW__WEBSERVER__SECRET_KEY=your_super_secret_key
+    volumes:
+      - ./airflow/dags:/opt/airflow/dags
+      - /var/run/docker.sock:/var/run/docker.sock 
+    command: scheduler
 
 volumes:
   pgdata:
-
