@@ -37,18 +37,21 @@ Microservices
 Setup Instructions
 
   1. Clone the repository:
+
     git clone https://github.com/R-cee/flight-data-pipeline.git
     cd flight-data-pipeline
   
-  2. Create .env files for each microservice (use example provided in each folder).
+  3. Create .env files for each microservice (use example provided in each folder).
      
-  3. Run the services using Docker Compose:
-     docker-compose up --build -d
+  4. Run the services using Docker Compose:
 
-  4. Initialize Airflow Database (one-time step)
-     docker-compose run --rm airflow-webserver airflow db init
+    docker-compose up --build -d
 
-  6. Create Airflow Admin User (one-time step):
+  6. Initialize Airflow Database (one-time step)
+
+    docker-compose run --rm airflow-webserver airflow db init
+
+  8. Create Airflow Admin User (one-time step):
 
     docker-compose run --rm airflow-webserver airflow users create `
     --username airflow `
@@ -62,18 +65,20 @@ Setup Instructions
 
     http://localhost:8080
 
-    Login using the credentials you just created
+   Login using the credentials you just created
     
-    Trigger the flight_data_pipeline DAG manually or set it to run on schedule
+   Trigger the flight_data_pipeline DAG manually or set it to run on schedule
      
   7. Access the API for aggregated data:
      
     http://localhost:5002/aggregated-flights
        
-    JSON Response:
+   JSON Response:
+    
     http://localhost:5002/aggregated-flights?year=2022&quarter=2
 
-    CSV Download:
+   CSV Download:
+   
     http://localhost:5002/aggregated-flights?year=2022&quarter=2&format=csv
   
 
