@@ -45,10 +45,11 @@ Setup Instructions
   3. Run the services using Docker Compose:
      docker-compose up --build -d
 
-  4. Initialize Airflow Database (one-time step) 
+  4. Initialize Airflow Database (one-time step)
      docker-compose run --rm airflow-webserver airflow db init
 
-  5. Create Airflow Admin User (one-time step)
+  6. Create Airflow Admin User (one-time step):
+
     docker-compose run --rm airflow-webserver airflow users create `
     --username airflow `
     --password airflow `
@@ -58,6 +59,7 @@ Setup Instructions
     --email airflow.admin@gmail.com
 
   6. Access the Airflow Web UI:
+
     http://localhost:8080
 
     Login using the credentials you just created
@@ -66,25 +68,25 @@ Setup Instructions
      
   7. Access the API for aggregated data:
      
-     http://localhost:5002/aggregated-flights
-     
-     JSON Response:
-     http://localhost:5002/aggregated-flights?year=2022&quarter=2
+    http://localhost:5002/aggregated-flights
+       
+    JSON Response:
+    http://localhost:5002/aggregated-flights?year=2022&quarter=2
 
-  8. CSV Download:
-     http://localhost:5002/aggregated-flights?year=2022&quarter=2&format=csv
+    CSV Download:
+    http://localhost:5002/aggregated-flights?year=2022&quarter=2&format=csv
   
 
 Features
 
-  Clean ETL (Extract, Transform, Load) pipeline using Dockerized microservices
+    Clean ETL (Extract, Transform, Load) pipeline using Dockerized microservices
   
-  Scalable architecture using Airflow orchestration
+    Scalable architecture using Airflow orchestration
 
-  REST API and CSV support for reporting
+    REST API and CSV support for reporting
 
-  Docker-based reproducibility
+    Docker-based reproducibility
   
-  Environment separation for credentials
+    Environment separation for credentials
   
-  Query API for insights on flight emissions
+    Query API for insights on flight emissions
