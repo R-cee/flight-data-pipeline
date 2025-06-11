@@ -60,7 +60,7 @@ services:
     environment:
       - AIRFLOW__CORE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres_airflow:5432/airflow
       - AIRFLOW__CORE__LOAD_EXAMPLES=False
-      - AIRFLOW__WEBSERVER__SECRET_KEY=your_super_secret_key
+      - AIRFLOW__WEBSERVER__SECRET_KEY=your_secret_key
     volumes:
       - ./airflow/dags:/opt/airflow/dags
       - /var/run/docker.sock:/var/run/docker.sock
@@ -75,7 +75,7 @@ services:
       - postgres_airflow
     environment:
       - AIRFLOW__CORE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres_airflow:5432/airflow
-      - AIRFLOW__WEBSERVER__SECRET_KEY=your_super_secret_key
+      - AIRFLOW__WEBSERVER__SECRET_KEY=your_secret_key
     volumes:
       - ./airflow/dags:/opt/airflow/dags
       - /var/run/docker.sock:/var/run/docker.sock 
