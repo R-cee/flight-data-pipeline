@@ -53,13 +53,7 @@ Setup Instructions
 
   8. Create Airflow Admin User (one-time step):
 
-    docker-compose run --rm airflow-webserver airflow users create `
-    --username airflow `
-    --password airflow `
-    --firstname Airflow `
-    --lastname Admin `
-    --role Admin `
-    --email airflow.admin@gmail.com
+    docker-compose run --rm airflow-webserver airflow users create --username airflow --password airflow --firstname Airflow --lastname Admin --role Admin --email admin@gmail.com
 
   6. Access the Airflow Web UI:
 
