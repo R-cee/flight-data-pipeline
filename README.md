@@ -2,7 +2,7 @@
 
 Overview
 
-  This project is a local microservices-based data processing system built to handle batch ingestion, processing, and delivery of flight data. It demonstrates a modular, scalable, and maintainable architecture using Docker container, Airflow orchestration, and REST APIs.
+  This project is a local microservices-based data processing system built to handle batch ingestion, processing, and delivery of flight data. It demonstrates a modular, scalable, and maintainable architecture using Docker containers, Airflow orchestration, and REST APIs.
 
   It performs ETL on raw flight data, aggregates CO2 emissions per route by quarter and year, and exposes the aggregated data via a REST API or downloadable CSV file.
 
@@ -41,17 +41,17 @@ Setup Instructions
     git clone https://github.com/R-cee/flight-data-pipeline.git
     cd flight-data-pipeline
   
-  3. Create .env files for each microservice (use example provided in each folder).
+  2. Create .env files for each microservice (use example provided in each folder).
      
-  4. Run the services using Docker Compose:
+  3. Run the services using Docker Compose:
 
     docker-compose up --build -d
 
-  6. Initialize Airflow Database (one-time step)
+  4. Initialize Airflow Database (one-time step)
 
     docker-compose run --rm airflow-webserver airflow db init
 
-  8. Create Airflow Admin User (one-time step):
+  5. Create Airflow Admin User (one-time step):
 
     docker-compose run --rm airflow-webserver airflow users create --username airflow --password airflow --firstname Airflow --lastname Admin --role Admin --email admin@gmail.com
 
